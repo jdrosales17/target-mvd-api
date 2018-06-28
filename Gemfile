@@ -26,7 +26,7 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -35,11 +35,20 @@ end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
+  # Ruby linter
+  gem 'rubocop', '~> 0.56.0', require: false
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  # Preview email in browser
+  gem "letter_opener", "~> 1.6"
 end
 
+# User Auth
+gem 'devise_token_auth'
+
+# Base64 image upload
+gem 'carrierwave-base64'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
