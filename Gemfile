@@ -26,11 +26,12 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+gem 'rack-cors', '~> 1.0', '>= 1.0.2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 3.5'
 end
 
 group :development do
@@ -41,14 +42,22 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   # Preview email in browser
-  gem "letter_opener", "~> 1.6"
+  gem 'letter_opener', '~> 1.6'
+  gem 'annotate', '~> 2.7', '>= 2.7.4'
+end
+
+group :test do
+  gem 'factory_bot_rails', '~> 4.10'
+  gem 'shoulda-matchers', '~> 3.1', '>= 3.1.2'
+  gem 'faker', '~> 1.8', '>= 1.8.7'
+  gem 'database_cleaner', '~> 1.7'
 end
 
 # User Auth
-gem 'devise_token_auth'
+gem 'devise_token_auth', '~> 0.1.43'
 
 # Base64 image upload
-gem 'carrierwave-base64'
+gem 'carrierwave-base64', '~> 2.7'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
