@@ -36,8 +36,11 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   mount_base64_uploader :image, ImageUploader
+  
   validates :nickname, presence: true, uniqueness: true
   validates :password, length: { in: 8..20 }, unless: :blank_password?
+
+  private
 
   def blank_password?
     self.password.blank?

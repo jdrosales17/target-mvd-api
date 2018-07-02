@@ -11,6 +11,10 @@ describe 'POST /auth', type: :request do
 
     it 'creates a user' do
       expect(json['data']).not_to be_empty
+      expect(json['data']['email']).to eq(valid_params[:email])
+      expect(json['data']['name']).to eq(valid_params[:name])
+      expect(json['data']['nickname']).to eq(valid_params[:nickname])
+      expect(json['data']['image']['url']).not_to be_empty
     end
 
     it 'returns status code 200' do
