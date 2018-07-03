@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-# Test suite for POST /auth
-describe 'POST /auth', type: :request do
-  # valid payload
+# Test suite for POST /api/v1/auth
+describe 'POST /api/v1/auth', type: :request do
   let(:valid_params) { attributes_for(:user) }
   let(:invalid_params) { attributes_for(:user, password: '1234') }
 
