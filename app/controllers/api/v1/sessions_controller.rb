@@ -1,9 +1,6 @@
 module Api
   module V1
     class SessionsController < DeviseTokenAuth::SessionsController
-      before_action :set_user_by_token, only: [:destroy]
-      after_action :reset_session, only: [:destroy]
-
       def facebook
         user_params = FacebookService.new(params[:access_token]).profile
         if user_params && user_params['id'] == params[:uid]
@@ -16,9 +13,9 @@ module Api
           render json: { error: 'Not Authorized.' }, status: :forbidden
         end
       rescue Koala::Facebook::AuthenticationError
-        render json: { error: 'Not Authorized.' }, status: :forbidden
+        render json: { error: I18n.t('api.sessions.facebook.not_authorized') }, status: :forbidden
       rescue ActiveRecord::RecordNotUnique
-        render json: { error: 'User already registered with email/password.' }, status: :bad_request
+        render json: { error: I18n.t('api.sessions.facebook.already_registerd') }, status: :bad_request
       end
     end
   end
