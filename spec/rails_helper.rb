@@ -31,6 +31,26 @@ RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  config.before(:each) do
+    stub_request(:get, 'https://graph.facebook.com/me?access_token=1234' \
+      '&fields=email,%20name,%20first_name,%20picture.type(large)').
+      with(
+        headers: {
+          'Accept' => '*/*',
+          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent' => 'Faraday v0.15.2'
+      }).
+      to_return(
+        status: 200,
+        body: {
+          'email': 'test@example.com',
+          'name': 'Test Example',
+          'first_name': 'Test',
+          'id': '1234'
+        }.to_json
+      )
+  end
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.

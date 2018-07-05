@@ -40,6 +40,17 @@ class User < ActiveRecord::Base
   validates :nickname, presence: true, uniqueness: true
   validates :password, length: { in: 8..20 }, unless: :blank_password?
 
+  def self.from_provider(provider, user_params)
+    where(provider: provider, uid: user_params['id']).first_or_create do |user|
+      user.password = Devise.friendly_token[0, 20]
+      user.email = user_params['email']
+      user.name = user_params['name']
+      user.nickname = user_params['first_name']
+      user.remote_image_url = user_params.deep_symbolize_keys.dig(:picture, :data, :url)
+      user.confirm
+    end
+  end
+
   private
 
   def blank_password?
