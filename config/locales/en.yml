@@ -30,4 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  api:
+    sessions:
+      facebook:
+        not_authorized: 'Not Authorized.'
+        already_registerd: 'User already registered with email/password.'

@@ -23,3 +23,5 @@
 
 # Ignore image uploads folder
 /public/uploads
+
+.env
