@@ -41,7 +41,7 @@ describe 'POST /api/v1/auth/facebook', type: :request do
         expect(response.headers['access-token']).not_to be_empty
       end
 
-      it 'does not creates the user again' do
+      it 'does not create the user again' do
         expect{ subject }.not_to change{ User.count }
       end
     end
