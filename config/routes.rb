@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       devise_scope :user do
         post 'auth/facebook', to: 'sessions#facebook'
       end
-      resources :users, only: [:update]
+      resources :users, only: %i[update]
     end
   end
 end
