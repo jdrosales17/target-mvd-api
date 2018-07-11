@@ -37,6 +37,8 @@ class User < ActiveRecord::Base
          :rememberable, :trackable, :validatable, :confirmable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :targets, dependent: :destroy
+
   mount_base64_uploader :image, ImageUploader
   
   validates :nickname, presence: true, uniqueness: true

@@ -5,5 +5,6 @@ FactoryBot.define do
     latitude     { Float(Faker::Address.latitude).round(6) }
     longitude    { Float(Faker::Address.longitude).round(6) }
     topic
+    user
   end
 end

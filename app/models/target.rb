@@ -10,14 +10,17 @@
 #  topic_id    :bigint(8)
 #  latitude    :float            not null
 #  longitude   :float            not null
+#  user_id     :bigint(8)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (topic_id => topics.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class Target < ApplicationRecord
   belongs_to :topic
+  belongs_to :user
 
   validates :title, presence: true, uniqueness: true
   validates :latitude, :longitude, presence: true
