@@ -10,6 +10,7 @@ RSpec.describe Target, type: :model do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:latitude) }
     it { is_expected.to validate_presence_of(:longitude) }
+    it { is_expected.to belong_to(:topic) }
 
     it 'is valid with valid attributes' do
       expect(@target1).to be_valid

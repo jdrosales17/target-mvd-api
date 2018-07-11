@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :topic do
-    name { Faker::Company.industry }
+    sequence(:name) { |n| "#{n} #{Faker::Company.industry}" }
   end
 end

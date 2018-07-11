@@ -20,6 +20,5 @@ class Target < ApplicationRecord
   belongs_to :topic
 
   validates :title, presence: true, uniqueness: true
-  validates :latitude, presence: true
-  validates :longitude, presence: true
+  validates :latitude, :longitude, presence: true
 end
