@@ -4,11 +4,13 @@ Rails.application.routes.draw do
   }
 
   namespace :api do
-    namespace :v1 do
+    namespace :v1, defaults: { format: :json } do
       devise_scope :user do
         post 'auth/facebook', to: 'sessions#facebook'
       end
       resources :users, only: %i[update]
+      resources :topics, only: %i[index]
+      resources :targets, only: %i[create]
     end
   end
 end
