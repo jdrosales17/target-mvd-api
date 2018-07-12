@@ -33,5 +33,5 @@ en:
   api:
     sessions:
       facebook:
-        not_authorized: 'Not Authorized.'
+        forbidden: 'Not Authorized.'
         already_registerd: 'User already registered with email/password.'

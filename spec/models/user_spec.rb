@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # Test suite for the User model
 RSpec.describe User, type: :model do
-  before(:all) do
+  before(:each) do
     @user1 = create(:user)
   end
 
