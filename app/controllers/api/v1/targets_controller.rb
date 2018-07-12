@@ -4,11 +4,11 @@ module Api
       before_action :authenticate_user!
 
       def index
-        @targets = Target.where(user_id: current_user.id)
+        @targets = current_user.targets
       end
 
       def create
-        @target = Target.create!(target_params.merge(user_id: current_user.id))
+        @target = current_user.targets.create!(target_params)
       end
 
       private

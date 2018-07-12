@@ -15,7 +15,7 @@ describe 'POST /api/v1/auth/facebook', type: :request do
     context 'when the user does not exists' do
       it 'returns status code 200' do
         subject
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it 'returns access token in the response headers' do
@@ -33,7 +33,7 @@ describe 'POST /api/v1/auth/facebook', type: :request do
 
       it 'returns status code 200' do
         subject
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
 
       it 'returns access token in the response headers' do
@@ -57,12 +57,12 @@ describe 'POST /api/v1/auth/facebook', type: :request do
     end
 
     it 'returns status code 403' do
-      expect(response).to have_http_status(403)
+      expect(response).to have_http_status(:forbidden)
     end
     
     it 'returns a not authorized error message' do
       expect(json['error'])
-        .to match('Not Authorized.')
+        .to match(I18n.t('api.sessions.facebook.forbidden'))
     end
   end
 end

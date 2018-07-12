@@ -2,13 +2,11 @@ require 'rails_helper'
 
 # Test suite for POST /api/v1/targets
 describe 'POST /api/v1/targets', type: :request do
-  let(:user) { create(:user) }
-  let(:topic) { create(:topic) }
+  let(:user)    { create(:user) }
+  let(:topic)   { create(:topic) }
   let(:payload) { { target: attributes_for(:target, topic_id: topic.id) } }
 
-  before(:each) do
-    user.confirm
-  end
+  before(:each) { user.confirm }
 
   context 'when the request is valid' do
     before { post '/api/v1/targets', params: payload, headers: auth_headers(user) }
@@ -23,7 +21,7 @@ describe 'POST /api/v1/targets', type: :request do
     end
 
     it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -34,7 +32,7 @@ describe 'POST /api/v1/targets', type: :request do
     end
 
     it 'returns status code 422' do
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it 'returns a validation failure message' do
