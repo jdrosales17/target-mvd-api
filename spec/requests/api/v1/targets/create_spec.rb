@@ -40,4 +40,20 @@ describe 'POST /api/v1/targets', type: :request do
         .to match('Validation failed: Topic must exist')
     end
   end
+
+  context 'when the user already has 10 targets created' do
+    before do
+      create_list(:target, 10, user_id: user.id)
+      post '/api/v1/targets', params: payload, headers: auth_headers(user)
+    end
+
+    it 'returns status code 422' do
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'returns a validation failure message' do
+      expect(json['message'])
+        .to match("Validation failed: User #{I18n.t('api.targets.create.limit_reached')} (#{Target::MAXIMUM_NUMBER_OF_TARGETS_PER_USER})")
+    end
+  end
 end
