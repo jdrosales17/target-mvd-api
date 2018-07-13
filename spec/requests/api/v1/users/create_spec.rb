@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # Test suite for POST /api/v1/auth
 describe 'POST /api/v1/auth', type: :request do
-  let(:valid_params) { attributes_for(:user) }
+  let(:valid_params)   { attributes_for(:user) }
   let(:invalid_params) { attributes_for(:user, password: '1234') }
 
   context 'when the request is valid' do
@@ -17,7 +17,7 @@ describe 'POST /api/v1/auth', type: :request do
     end
 
     it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -25,7 +25,7 @@ describe 'POST /api/v1/auth', type: :request do
     before { post '/api/v1/auth', params: invalid_params }
 
     it 'returns status code 422' do
-      expect(response).to have_http_status(422)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it 'returns a validation failure message' do

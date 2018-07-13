@@ -2,9 +2,13 @@ module Api
   module V1
     class TargetsController < ApplicationController
       before_action :authenticate_user!
-      
+
+      def index
+        @targets = current_user.targets
+      end
+
       def create
-        @target = Target.create!(target_params)
+        @target = current_user.targets.create!(target_params)
       end
 
       private

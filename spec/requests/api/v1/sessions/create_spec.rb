@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # Test suite for POST /api/v1/auth/sign_in
 describe 'POST /api/v1/auth/sign_in', type: :request do
-  let!(:user) { create(:user) }
+  let!(:user)        { create(:user) }
   let(:valid_params) { { email: user.email, password: user.password } }
 
   context 'when the user is confirmed and the credentials are valid' do
@@ -12,7 +12,7 @@ describe 'POST /api/v1/auth/sign_in', type: :request do
     end
 
     it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     it 'returns access token in the response headers' do
@@ -27,7 +27,7 @@ describe 'POST /api/v1/auth/sign_in', type: :request do
     end
 
     it 'returns status code 401' do
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'returns a invalid credentials error message' do
@@ -43,7 +43,7 @@ describe 'POST /api/v1/auth/sign_in', type: :request do
     end
 
     it 'returns status code 401' do
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'returns a invalid credentials error message' do
@@ -56,7 +56,7 @@ describe 'POST /api/v1/auth/sign_in', type: :request do
     before { post '/api/v1/auth/sign_in', params: valid_params }
 
     it 'returns status code 401' do
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'returns a confirmation error message' do

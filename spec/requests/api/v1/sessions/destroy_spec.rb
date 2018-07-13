@@ -4,15 +4,13 @@ require 'rails_helper'
 describe 'DELETE /api/v1/auth/sign_out', type: :request do
   let!(:user) { create(:user) }
 
-  before(:each) do
-    user.confirm
-  end
+  before(:each) { user.confirm }
 
   context 'when the access token is valid' do
     before { delete '/api/v1/auth/sign_out', headers: auth_headers(user) }
 
     it 'returns status code 200' do
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -24,7 +22,7 @@ describe 'DELETE /api/v1/auth/sign_out', type: :request do
     end
 
     it 'returns status code 404' do
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(:not_found)
     end
 
     it 'returns a sign out error message' do

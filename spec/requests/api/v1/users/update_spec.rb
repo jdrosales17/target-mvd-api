@@ -2,13 +2,11 @@ require 'rails_helper'
 
 # Test suite for PUT /api/v1/user/:id
 describe 'PUT /api/v1/user/:id', type: :request do
-  let(:user) { create(:user) }
-  let(:user2) { create(:user) }
+  let(:user)    { create(:user) }
+  let(:user2)   { create(:user) }
   let(:payload) { { user: random_location } }
 
-  before(:each) do
-    user.confirm
-  end
+  before(:each) { user.confirm }
 
   context 'when the request is valid' do
     before { put '/api/v1/users/me', params: payload, headers: auth_headers(user) }
@@ -20,7 +18,7 @@ describe 'PUT /api/v1/user/:id', type: :request do
     end
 
     it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(:no_content)
     end
   end
 
@@ -40,7 +38,7 @@ describe 'PUT /api/v1/user/:id', type: :request do
     end
 
     it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+      expect(response).to have_http_status(:no_content)
     end
   end
 
@@ -52,7 +50,7 @@ describe 'PUT /api/v1/user/:id', type: :request do
     end
 
     it 'returns status code 401' do
-      expect(response).to have_http_status(401)
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'returns an authorization error message' do
