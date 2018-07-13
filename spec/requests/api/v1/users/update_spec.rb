@@ -4,7 +4,7 @@ require 'rails_helper'
 describe 'PUT /api/v1/user/:id', type: :request do
   let(:user)    { create(:user) }
   let(:user2)   { create(:user) }
-  let(:payload) { { user: random_location } }
+  let(:payload) { { user: attributes_for(:user).except(:email, :password).merge(random_location) } }
 
   before(:each) { user.confirm }
 
@@ -13,6 +13,8 @@ describe 'PUT /api/v1/user/:id', type: :request do
 
     it 'changes the attributes of the user sending the request with code 204' do
       updated_user = User.find(user.id)
+      expect(updated_user[:name]).to match(payload[:user][:name])
+      expect(updated_user[:nickname]).to match(payload[:user][:nickname])
       expect(updated_user[:latitude]).to match(payload[:user][:latitude])
       expect(updated_user[:longitude]).to match(payload[:user][:longitude])
     end
@@ -27,12 +29,16 @@ describe 'PUT /api/v1/user/:id', type: :request do
 
     it 'does not change the attributes of user2' do
       target_user = User.find(user2.id)
+      expect(target_user[:name]).not_to match(payload[:user][:name])
+      expect(target_user[:nickname]).not_to match(payload[:user][:nickname])
       expect(target_user[:latitude]).not_to match(payload[:user][:latitude])
       expect(target_user[:longitude]).not_to match(payload[:user][:longitude])
     end
 
     it 'changes the attributes of the user sending the request' do
       updated_user = User.find(user.id)
+      expect(updated_user[:name]).to match(payload[:user][:name])
+      expect(updated_user[:nickname]).to match(payload[:user][:nickname])
       expect(updated_user[:latitude]).to match(payload[:user][:latitude])
       expect(updated_user[:longitude]).to match(payload[:user][:longitude])
     end
