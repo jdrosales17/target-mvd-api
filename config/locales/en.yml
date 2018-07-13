@@ -38,3 +38,6 @@ en:
       facebook:
         forbidden: 'Not authorized'
         already_registerd: 'User already registered with email/password'
+    targets:
+      create:
+        limit_reached: 'maximum number of targets reached'

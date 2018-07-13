@@ -19,9 +19,21 @@
 #
 
 class Target < ApplicationRecord
+  MAXIMUM_NUMBER_OF_TARGETS_PER_USER = 10
+
   belongs_to :topic
   belongs_to :user
 
   validates :title, presence: true, uniqueness: true
   validates :latitude, :longitude, presence: true
+
+  validate :target_limit_per_user
+
+  private
+
+  def target_limit_per_user
+    if user.targets.size >= MAXIMUM_NUMBER_OF_TARGETS_PER_USER
+      errors.add(:user, I18n.t('api.targets.create.limit_reached'))
+    end
+  end
 end
