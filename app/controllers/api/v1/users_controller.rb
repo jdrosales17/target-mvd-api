@@ -3,6 +3,7 @@ module Api
     class UsersController < ApplicationController
       before_action :authenticate_user!
 
+      # PUT /api/v1/users/me
       def update
         current_user.update!(user_params)
         head :no_content

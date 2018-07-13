@@ -31,7 +31,10 @@
 
 en:
   api:
+    errors:
+      server: 'An error ocurred'
+      not_found: "Couldn't find the record"
     sessions:
       facebook:
-        forbidden: 'Not authorized.'
-        already_registerd: 'User already registered with email/password.'
+        forbidden: 'Not authorized'
+        already_registerd: 'User already registered with email/password'

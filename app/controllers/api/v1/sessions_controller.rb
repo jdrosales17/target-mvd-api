@@ -1,6 +1,7 @@
 module Api
   module V1
     class SessionsController < DeviseTokenAuth::SessionsController
+      # POST /api/v1/auth/facebook
       def facebook
         user_params = FacebookService.new(params[:access_token]).profile
         if user_params && user_params['id'] == params[:uid]

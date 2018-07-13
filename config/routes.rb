@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       end
       resources :users, only: %i[update]
       resources :topics, only: %i[index]
-      resources :targets, only: %i[index create]
+      resources :targets, only: %i[index create destroy]
     end
   end
 end
