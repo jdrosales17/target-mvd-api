@@ -9,5 +9,9 @@ module ExceptionHandler
     rescue_from ActiveRecord::RecordInvalid do |e|
       json_response({ message: e.message }, :unprocessable_entity)
     end
+
+    rescue_from ActionController::ParameterMissing do |e|
+      json_response({ message: I18n.t('api.errors.missing_param') }, :unprocessable_entity)
+    end
   end
 end

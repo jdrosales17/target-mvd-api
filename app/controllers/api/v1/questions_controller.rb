@@ -5,14 +5,12 @@ module Api
 
       # POST /api/v1/questions
       def create
-        ApplicationMailer.email_to_admin(current_user.email, question_params).deliver_now
-        head :no_content
-      end
-
-      private
-
-      def question_params
-        params.require(:email).permit(:subject, :body)
+        if params.has_key?(:subject) && params.has_key?(:body)
+          ApplicationMailer.email_to_admin(current_user.email, params[:subject], params[:body]).deliver_now
+          head :no_content
+        else
+          raise ActionController::ParameterMissing.new('subject/body')
+        end
       end
     end
   end
