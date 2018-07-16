@@ -9,7 +9,9 @@ describe 'POST /api/v1/targets', type: :request do
   before(:each) { user.confirm }
 
   context 'when the request is valid' do
-    before { post '/api/v1/targets', params: payload, headers: auth_headers(user) }
+    before do
+      post '/api/v1/targets', params: payload, headers: auth_headers(user)
+    end
 
     it 'creates a target' do
       expect(json).not_to be_empty

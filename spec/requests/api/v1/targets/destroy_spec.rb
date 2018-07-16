@@ -8,10 +8,12 @@ describe 'DELETE /api/v1/targets/:id', type: :request do
   before(:each) { user.confirm }
 
   context 'when the request is valid' do
-    subject { delete "/api/v1/targets/#{target.id}", headers: auth_headers(user) }
+    subject do
+      delete "/api/v1/targets/#{target.id}", headers: auth_headers(user)
+    end
 
     it 'deletes the target' do
-      expect{ subject }.to change(user.reload.targets, :count).by(-1)
+      expect { subject }.to change(user.reload.targets, :count).by(-1)
     end
 
     it 'returns status code 204' do
@@ -23,10 +25,12 @@ describe 'DELETE /api/v1/targets/:id', type: :request do
   context 'when the target is not found' do
     before { Target.find(target.id).destroy }
 
-    subject { delete "/api/v1/targets/#{target.id}", headers: auth_headers(user) }
+    subject do
+      delete "/api/v1/targets/#{target.id}", headers: auth_headers(user)
+    end
 
     it 'does not delete the target' do
-      expect{ subject }.not_to change(user.reload.targets, :count)
+      expect { subject }.not_to change(user.reload.targets, :count)
     end
 
     it 'returns status code 404' do

@@ -1,3 +1,7 @@
 json.topics do
-  json.array! @topics, :id, :name
+  json.array!(
+    @topics,
+    :id,
+    :name
+  )
 end

@@ -1,4 +1,9 @@
-json.(
-  @target, :id, :title, :area_length,
-  :topic_id, :latitude, :longitude
+json.call(
+  @target,
+  :id,
+  :title,
+  :area_length,
+  :topic_id,
+  :latitude,
+  :longitude
 )

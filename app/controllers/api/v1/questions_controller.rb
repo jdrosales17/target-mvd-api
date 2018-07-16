@@ -5,11 +5,18 @@ module Api
 
       # POST /api/v1/questions
       def create
-        if params.has_key?(:subject) && params.has_key?(:body)
-          ApplicationMailer.email_to_admin(current_user.email, params[:subject], params[:body]).deliver_now
+        if params[:subject].present? && params[:body].present?
+          ApplicationMailer.email_to_admin(
+            current_user.email,
+            params[:subject],
+            params[:body]
+          ).deliver_now
           head :no_content
         else
-          raise ActionController::ParameterMissing.new('subject/body')
+          raise(
+            ActionController::ParameterMissing,
+            'Subject/body missing'
+          )
         end
       end
     end
