@@ -34,6 +34,7 @@ en:
     errors:
       server: 'An error ocurred'
       not_found: "Couldn't find the record"
+      missing_param: 'A required param is missing'
     sessions:
       facebook:
         forbidden: 'Not authorized'

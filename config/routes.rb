@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :users, only: %i[update]
       resources :topics, only: %i[index]
       resources :targets, only: %i[index create destroy]
+      post '/questions', to: 'questions#create'
     end
   end
 end
