@@ -1,0 +1,456 @@
+FORMAT: 1A
+HOST: http://localhost:3000/
+
+# Target MVD API
+
+Target MVD is a simple API that allows users to manage their personal location based targets.
+
+Also, it connects users with matching targets and support conversations between them.
+
+# Group Authentication
+
+Resources related to authentication in the API.
+
+## Sign up [/api/v1/auth]
+
+### Sign up [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "test@test.com",
+                "nickname": "test",
+                "name": "Test User",
+                "image": "data:image/jpeg;base64,<base64_encoded_string>",
+                "password": "password",
+                "confirm_success_url": "https://www.targetmvd.com"
+            }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
+    + Body
+
+            {
+                "data": {
+                    "id": "4",
+                    "email": "test@test.com",
+                    "provider": "email",
+                    "image": {
+                        "url": "/uploads/user/image/4/image.jpeg"
+                    },
+                    "nickname": "test",
+                    "uid": "test@test.com",
+                    "allow_password_change": false,
+                    "name": "Test User",
+                    "created_at": "2018-07-17T14:46:14.481Z",
+                    "updated_at": "2018-07-17T14:46:14.481Z",
+                    "latitude": null,
+                    "longitude": null
+                }
+            }
+
++ Response 422
+
+    + Body
+
+            {
+                "status": "error",
+                "data": {
+                    "id": null,
+                    "provider": "email",
+                    "uid": "",
+                    "allow_password_change": false,
+                    "name": "Test",
+                    "nickname": "test",
+                    "image": {
+                        "url": "/uploads/tmp/1531839089-2299-0002-2967/image.jpeg"
+                    },
+                    "email": "test@test.com",
+                    "created_at": null,
+                    "updated_at": null,
+                    "latitude": null,
+                    "longitude": null
+                },
+                "errors": {
+                    "email": [
+                        "has already been taken"
+                    ],
+                    "nickname": [
+                        "has already been taken"
+                    ],
+                    "full_messages": [
+                        "Email has already been taken",
+                        "Nickname has already been taken"
+                    ]
+                }
+            }
+
+## Sign in [/api/v1/auth/sign_in]
+
+### Sign in [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "email": "test@test.com",
+                "password": "password"
+            }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
+    + Body
+
+            {
+                "data": {
+                    "id": "4",
+                    "email": "test@test.com",
+                    "provider": "email",
+                    "image": {
+                        "url": "/uploads/user/image/4/image.jpeg"
+                    },
+                    "nickname": "test",
+                    "uid": "test@test.com",
+                    "allow_password_change": false,
+                    "name": "Test User",
+                    "latitude": -34.806847,
+                    "longitude": -56.101097
+                }
+            }
+
++ Response 401
+
+    + Body
+
+            {
+                "success": false,
+                "errors": [
+                    "Invalid login credentials. Please try again."
+                ]
+            }
+
+## Sign out [/api/v1/auth/sign_out]
+
+### Sign out [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true
+            }
+
+## Validate token [/api/v1/auth/validate_token]
+
+### Validate token [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true,
+                "data": {
+                    "id": "4",
+                    "email": "test@test.com",
+                    "provider": "email",
+                    "image": {
+                        "url": "/uploads/user/image/4/image.jpeg"
+                    },
+                    "nickname": "test",
+                    "uid": "test@test.com",
+                    "allow_password_change": false,
+                    "name": "Test User",
+                    "latitude": -34.806847,
+                    "longitude": -56.101097
+                }
+            }
+
+## Facebook sign in [/api/v1/auth/facebook]
+
+### Facebook sign in [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "access-token": "<facebook_api_access_token>",
+                "uid": "11315146271786528"
+            }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
+    + Body
+
+            {
+                "data": {
+                    "id": 5,
+                    "provider": "facebook",
+                    "uid": "11315146271786528",
+                    "allow_password_change": false,
+                    "name": "Test User",
+                    "nickname": "test",
+                    "image": {
+                        "url": "/uploads/user/image/5/profilepic.jpeg"
+                    },
+                    "email": "test@test.com",
+                    "latitude": null,
+                    "longitude": null
+                }
+            }
+
++ Response 403
+
+    + Body
+
+            {
+                "error": "Not authorized"
+            }
+
+# Group Users
+
+Resources related to users in the API.
+
+## User [/api/v1/users/me]
+
+### Update user [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
+    + Body
+
+            {
+                "user": {
+                    "nickname": "newnickname",
+                    "name": "New Name",
+                    "image": "data:image/jpeg;base64,<base64_encoded_string>",
+                    "latitude": -34.806847,
+                    "longitude": -56.101097
+                }
+            }
+
++ Response 204
+
++ Response 422
+
+    + Body
+
+            {
+                "message": "Validation failed: Nickname has already been taken"
+            }
+
+# Group Topics
+
+Resources related to topics in the API.
+
+## Topic Collection [/api/v1/topics]
+
+### List all topics [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "topics": [
+                    {
+                        "id": 1,
+                        "name": "Travel"
+                    },
+                    {
+                        "id": 2,
+                        "name": "Sports"
+                    }
+                ]
+            }
+
+# Group Targets
+
+Resources related to targets in the API.
+
+## Target Collection [/api/v1/targets]
+
+### Create a new target [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
+    + Body
+
+            {
+                "target": {
+                    "title": "New Target",
+                    "area_length": 10,
+                    "topic_id": 1,
+                    "latitude": -34.206341,
+                    "longitude": -56.858246
+                }
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": 1,
+                "title": "New Target",
+                "area_length": 10,
+                "topic_id": 1,
+                "latitude": -34.206341,
+                "longitude": -56.858246
+            }
+
++ Response 422
+
+    + Body
+
+            {
+                "message": "Validation failed: Title has already been taken"
+            }
+
+### List user's targets [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "targets": [
+                    {
+                        "id": 1,
+                        "title": "New Target",
+                        "area_length": 10,
+                        "topic_id": 1,
+                        "latitude": -34.206341,
+                        "longitude": -56.858246
+                    }
+                ]
+            }
+
+## Target [/api/v1/targets/{target_id}]
+
++ Parameters
+
+    + target_id (number) - ID of the target in the form of an integer
+
+### Delete a target [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
++ Response 204
+
+# Group Questions
+
+Resources related to questions in the API.
+
+## Send email to admin [/api/v1/questions]
+
+### Send email to admin [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            access-token: sO2bm_Bpdyoo8r78jZ-fqg
+            client: QADgNCWRJj0LyRruqzYbBg
+            expiry: 1489009792
+            uid: test@test.com
+
+    + Body
+
+            {
+                "subject": "<email_subject>",
+                "body": "<email_body>"
+            }
+
++ Response 204
+
++ Response 422
+
+    + Body
+
+            {
+                "message": "A required param is missing"
+            }
