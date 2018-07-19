@@ -40,7 +40,6 @@ class User < ActiveRecord::Base
   has_many :targets, dependent: :destroy
 
   mount_base64_uploader :image, ImageUploader
-  
   validates :nickname, presence: true, uniqueness: true
   validates :password, length: { in: 8..20 }, unless: :blank_password?
 
@@ -59,6 +58,6 @@ class User < ActiveRecord::Base
   private
 
   def blank_password?
-    self.password.blank?
+    password.blank?
   end
 end

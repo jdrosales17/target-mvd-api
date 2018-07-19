@@ -33,7 +33,10 @@ class Target < ApplicationRecord
 
   def target_limit_per_user
     if user.targets.count >= MAXIMUM_NUMBER_OF_TARGETS_PER_USER
-      errors.add(:user, "#{I18n.t('api.targets.create.limit_reached', limit: MAXIMUM_NUMBER_OF_TARGETS_PER_USER)}")
+      errors.add(
+        :user,
+        "#{I18n.t('api.targets.create.limit_reached', limit: MAXIMUM_NUMBER_OF_TARGETS_PER_USER)}"
+      )
     end
   end
 end

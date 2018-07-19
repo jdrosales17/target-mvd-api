@@ -22,7 +22,8 @@ module Api
       private
 
       def target_params
-        params.require(:target).permit(:title, :area_length, :topic_id, :latitude, :longitude)
+        params.require(:target)
+              .permit(:title, :area_length, :topic_id, :latitude, :longitude)
       end
 
       def target

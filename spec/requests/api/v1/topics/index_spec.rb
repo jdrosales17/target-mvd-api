@@ -13,7 +13,8 @@ describe 'GET /api/v1/topics', type: :request do
     it 'returns all topics' do
       expect(json).not_to be_empty
       expect(json['topics'].size).to eq(topics.size)
-      expect(json['topics'].map { |topic| topic['id'] }).to match_array(topics.pluck(:id))
+      expect(json['topics'].map { |topic| topic['id'] })
+        .to match_array(topics.pluck(:id))
     end
 
     it 'returns status code 200' do

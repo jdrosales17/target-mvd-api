@@ -13,7 +13,8 @@ describe 'GET /api/v1/targets', type: :request do
     it 'returns all targets of the user' do
       expect(json).not_to be_empty
       expect(json['targets'].size).to eq(targets.size)
-      expect(json['targets'].map { |target| target['id'] }).to match_array(targets.pluck(:id))
+      expect(json['targets'].map { |target| target['id'] })
+        .to match_array(targets.pluck(:id))
     end
 
     it 'returns status code 200' do

@@ -4,14 +4,21 @@ require 'rails_helper'
 describe 'PUT /api/v1/user/:id', type: :request do
   let(:user)    { create(:user) }
   let(:user2)   { create(:user) }
-  let(:payload) { { user: attributes_for(:user).except(:email, :password).merge(random_location) } }
+  let(:payload) do
+    {
+      user: attributes_for(:user)
+        .except(:email, :password).merge(random_location)
+    }
+  end
 
   before(:each) { user.confirm }
 
   context 'when the request is valid' do
-    before { put '/api/v1/users/me', params: payload, headers: auth_headers(user) }
+    before do
+      put '/api/v1/users/me', params: payload, headers: auth_headers(user)
+    end
 
-    it 'changes the attributes of the user sending the request with code 204' do
+    it 'changes the attributes of the user sending the request' do
       updated_user = User.find(user.id)
       expect(updated_user[:name]).to match(payload[:user][:name])
       expect(updated_user[:nickname]).to match(payload[:user][:nickname])
@@ -25,7 +32,11 @@ describe 'PUT /api/v1/user/:id', type: :request do
   end
 
   context 'when trying to update another user' do
-    before { put "/api/v1/users/#{user2[:id]}", params: payload, headers: auth_headers(user) }
+    before do
+      put "/api/v1/users/#{user2[:id]}",
+          params: payload,
+          headers: auth_headers(user)
+    end
 
     it 'does not change the attributes of user2' do
       target_user = User.find(user2.id)

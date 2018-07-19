@@ -2,14 +2,13 @@ require 'rails_helper'
 
 # Test suite for POST /api/v1/auth/facebook
 describe 'POST /api/v1/auth/facebook', type: :request do
-
   context 'when the request is valid' do
     subject do 
-      post '/api/v1/auth/facebook',
-        params: {
-          access_token: '1234',
-          uid: '1234'
-        }
+      post  '/api/v1/auth/facebook',
+            params: {
+              access_token: '1234',
+              uid: '1234'
+            }
     end
 
     context 'when the user does not exists' do
@@ -24,7 +23,7 @@ describe 'POST /api/v1/auth/facebook', type: :request do
       end
 
       it 'creates a new user' do
-        expect{ subject }.to change{ User.count }.by(1)
+        expect { subject }.to change { User.count }.by(1)
       end
     end
 
@@ -42,24 +41,24 @@ describe 'POST /api/v1/auth/facebook', type: :request do
       end
 
       it 'does not create the user again' do
-        expect{ subject }.not_to change{ User.count }
+        expect { subject }.not_to change { User.count }
       end
     end
   end
 
   context 'when the request has an invalid uid' do
-    before do 
-      post '/api/v1/auth/facebook',
-        params: {
-          access_token: '1234',
-          uid: '12'
-        }
+    before do
+      post  '/api/v1/auth/facebook',
+            params: {
+              access_token: '1234',
+              uid: '12'
+            }
     end
 
     it 'returns status code 403' do
       expect(response).to have_http_status(:forbidden)
     end
-    
+
     it 'returns a not authorized error message' do
       expect(json['error'])
         .to match(I18n.t('api.sessions.facebook.forbidden'))
