@@ -2,8 +2,8 @@ require 'rails_helper'
 
 # Test suite for PUT /api/v1/user/:id
 describe 'PUT /api/v1/user/:id', type: :request do
-  let(:user)    { create(:user) }
-  let(:user2)   { create(:user) }
+  let(:user)       { create(:user) }
+  let(:other_user) { create(:user) }
   let(:payload) do
     {
       user: attributes_for(:user)
@@ -33,13 +33,13 @@ describe 'PUT /api/v1/user/:id', type: :request do
 
   context 'when trying to update another user' do
     before do
-      put "/api/v1/users/#{user2[:id]}",
+      put "/api/v1/users/#{other_user[:id]}",
           params: payload,
           headers: auth_headers(user)
     end
 
-    it 'does not change the attributes of user2' do
-      target_user = User.find(user2.id)
+    it 'does not change the attributes of another user' do
+      target_user = User.find(other_user.id)
       expect(target_user[:name]).not_to match(payload[:user][:name])
       expect(target_user[:nickname]).not_to match(payload[:user][:nickname])
       expect(target_user[:latitude]).not_to match(payload[:user][:latitude])
