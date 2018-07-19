@@ -1,11 +1,3 @@
 json.targets do
-  json.array!(
-    @targets,
-    :id,
-    :title,
-    :area_length,
-    :topic_id,
-    :latitude,
-    :longitude
-  )
+  json.array!(@targets, partial: 'target', as: :target)
 end
