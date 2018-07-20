@@ -11,6 +11,7 @@ module Api
       # POST /api/v1/targets
       def create
         @target = current_user.targets.create!(target_params)
+        Target.search_compatible_targets(@target)
       end
 
       # DELETE /api/v1/targets/:id

@@ -55,7 +55,7 @@ describe 'POST /api/v1/targets', type: :request do
 
     it 'returns a validation failure message' do
       expect(json['message'])
-        .to match("Validation failed: User #{I18n.t('api.targets.create.limit_reached', limit: Target::MAXIMUM_NUMBER_OF_TARGETS_PER_USER)}")
+        .to match("Validation failed: User #{I18n.t('api.targets.create.limit_reached', limit: Target::MAX_TARGETS_PER_USER)}")
     end
   end
 end
