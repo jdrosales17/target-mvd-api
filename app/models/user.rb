@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :targets, dependent: :destroy
+  has_many :devices, dependent: :destroy
 
   mount_base64_uploader :image, ImageUploader
   validates :nickname, presence: true, uniqueness: true
