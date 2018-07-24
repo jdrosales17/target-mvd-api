@@ -4,10 +4,7 @@ end
 json.compatible_users do
   json.array!(
     @compatible_users,
-    :id,
-    :name,
-    :nickname,
-    :image,
-    :email
+    partial: '/api/v1/compatible_users/compatible_user',
+    as: :compatible_user
   )
 end
