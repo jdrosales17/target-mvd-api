@@ -35,13 +35,15 @@ class Target < ApplicationRecord
 
   validate :target_limit_per_user
 
-  def self.search_compatible_targets(new_target)
-    Target.where.not(user_id: new_target.user_id).each do |target|
+  def search_compatible_targets
+    compatible_targets = []
+    Target.where.not(user_id: user_id).where(topic_id: topic_id).each do |target|
       origin = [target.latitude, target.longitude]
-      dist = new_target.distance_to(origin) * 1000
-      is_within_distance = dist <= target.area_length + new_target.area_length
-      puts 'Compatible target found!' if is_within_distance
+      dist = distance_to(origin) * 1000
+      next unless dist <= target.area_length + area_length
+      compatible_targets.push(target)
     end
+    compatible_targets
   end
 
   private

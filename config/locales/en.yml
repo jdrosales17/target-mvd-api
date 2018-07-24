@@ -35,6 +35,7 @@ en:
       server: 'An error ocurred'
       not_found: "Couldn't find the record"
       missing_param: 'A required param is missing'
+      one_signal: 'One Signal API not available'
     sessions:
       facebook:
         forbidden: 'Not authorized'
@@ -42,3 +43,8 @@ en:
     targets:
       create:
         limit_reached: 'maximum number of targets reached (%{limit})'
+    notifications:
+      titles:
+        new_compatible_target: 'You have a new match!'
+      messages:
+        new_compatible_target: 'Another user created a target that matches one of yours.'

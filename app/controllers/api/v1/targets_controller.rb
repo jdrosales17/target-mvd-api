@@ -11,7 +11,15 @@ module Api
       # POST /api/v1/targets
       def create
         @target = current_user.targets.create!(target_params)
-        Target.search_compatible_targets(@target)
+        @compatible_users = []
+        @target.search_compatible_targets.each do |compatible_target|
+          @compatible_users.push(compatible_target.user)
+          begin
+            notify(compatible_target.user.devices.map(&:device_id))
+          rescue RuntimeError => e
+            logger.error e
+          end
+        end
       end
 
       # DELETE /api/v1/targets/:id
@@ -29,6 +37,14 @@ module Api
 
       def target
         @target ||= current_user.targets.find(params[:id])
+      end
+
+      def notify(device_ids)
+        OneSignalService.new.send_notification(
+          device_ids,
+          I18n.t('api.notifications.titles.new_compatible_target'),
+          I18n.t('api.notifications.messages.new_compatible_target')
+        )
       end
     end
   end
