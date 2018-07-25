@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
   include ExceptionHandler
+  include NotificationManager
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 

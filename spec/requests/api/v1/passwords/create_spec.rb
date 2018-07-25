@@ -6,14 +6,12 @@ describe 'POST /api/v1/auth/password', type: :request do
 
   before(:each) { user.confirm }
 
-  REDIRECT_URL = 'https://www.targetmvd.com'.freeze
-
   context 'when the request is valid' do
     before do
       post  '/api/v1/auth/password',
             params: {
               email: user.email,
-              redirect_url: REDIRECT_URL
+              redirect_url: Faker::Internet.url
             }
     end
 
@@ -32,7 +30,7 @@ describe 'POST /api/v1/auth/password', type: :request do
       post  '/api/v1/auth/password',
             params: {
               email: 'wrong.email@example.com',
-              redirect_url: REDIRECT_URL
+              redirect_url: Faker::Internet.url
             }
     end
 

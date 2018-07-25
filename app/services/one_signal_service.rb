@@ -1,6 +1,8 @@
-class OneSignalService
+module OneSignalService
+  extend self
   include HTTParty
 
+  # Setting base uri, headers, default params and timeout for every request
   base_uri 'https://onesignal.com/api/v1'
   headers 'Content-Type': 'application/json;charset=utf-8'
   headers 'Authorization': "Basic #{ENV['ONE_SIGNAL_REST_API_KEY']}"
@@ -13,7 +15,7 @@ class OneSignalService
       headings: { 'en': title },
       contents: { 'en': message }
     }
-    self.class.post('/notifications', body: params.to_json)
+    post('/notifications', body: params.to_json)
   rescue HTTParty::Error, SocketError
     raise I18n.t('api.errors.one_signal')
   end
