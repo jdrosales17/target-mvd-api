@@ -6,7 +6,7 @@ describe MessageBroadcastJob, type: :job do
   describe '#perform' do
     before(:each) { ActiveJob::Base.queue_adapter = :test }
 
-    it 'the room channel to broadcast the message' do
+    it 'calls the room channel to broadcast the message' do
       expect(RoomChannel).to receive(:broadcast_to)
         .with(message.conversation, anything)
 
