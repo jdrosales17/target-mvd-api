@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       resources :devices, only: %i[create]
       post '/questions', to: 'questions#create'
       get '/compatible_users', to: 'compatible_users#index'
+      resources :conversations, only: [] do
+        resources :messages, only: %i[index]
+      end
     end
   end
 end
