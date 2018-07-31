@@ -7,6 +7,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'database_cleaner'
+require 'action_cable/testing/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -57,7 +58,7 @@ RSpec.configure do |config|
         body: {
           'include_player_ids': ['1234'],
           'headings': { 'en': 'You have a new match!' },
-          'contents': { 'en': 'Another user created a target that matches one of yours.'}
+          'contents': { 'en': 'Another user created a target that matches one of yours'}
         }.to_json,
         headers: {
           'Authorization' => 'Basic NWRmMzU5ZTMtY2U5YS00ZTkwLWE5MTAtZmFhY2ZlY2E3Nzlk',

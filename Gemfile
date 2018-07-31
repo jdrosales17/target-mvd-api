@@ -61,6 +61,7 @@ group :development do
 end
 
 group :test do
+  gem 'action-cable-testing', '~> 0.3.1'
   gem 'database_cleaner', '~> 1.7'
   gem 'factory_bot_rails', '~> 4.10'
   gem 'faker', '~> 1.8', '>= 1.8.7'

@@ -45,7 +45,8 @@ describe 'POST /api/v1/targets', type: :request do
     it 'creates a target' do
       expect(json).not_to be_empty
       expect(json['target']['title']).to eq(@payload[:target][:title])
-      expect(json['target']['area_length']).to eq(@payload[:target][:area_length])
+      expect(json['target']['area_length'])
+        .to eq(@payload[:target][:area_length])
       expect(json['target']['topic_id']).to eq(@payload[:target][:topic_id])
       expect(json['target']['latitude']).to eq(@payload[:target][:latitude])
       expect(json['target']['longitude']).to eq(@payload[:target][:longitude])
@@ -55,9 +56,10 @@ describe 'POST /api/v1/targets', type: :request do
       expect(json).not_to be_empty
       expect(json['compatible_users'][0]['id']).to eq(other_user.id)
       expect(json['compatible_users'][0]['name']).to eq(other_user.name)
-      expect(json['compatible_users'][0]['nickname']).to eq(other_user.nickname)
-      expect(json['compatible_users'][0]['image']['url']).to eq(other_user.image.url)
-      expect(json['compatible_users'][0]['email']).to eq(other_user.email)
+      expect(json['compatible_users'][0]['image']['url'])
+        .to eq(other_user.image.url)
+      expect(json['compatible_users'][0]['room_id'])
+        .to eq(user.conversation_with(other_user).id)
     end
 
     it 'returns status code 200' do
