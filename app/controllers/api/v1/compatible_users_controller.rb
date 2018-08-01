@@ -8,9 +8,7 @@ module Api
         @compatible_users = []
         current_user.targets.find_each do |target|
           target.search_compatible_targets.each do |compatible_target|
-            unless @compatible_users.include?(compatible_target.user)
-              @compatible_users.push(compatible_target.user)
-            end
+            @compatible_users |= [compatible_target.user]
           end
         end
       end
