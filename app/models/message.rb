@@ -26,6 +26,7 @@ class Message < ApplicationRecord
   after_create_commit do
     MessageBroadcastJob.perform_later(self)
     notify_new_message
+    update_unread_messages
   end
 
   private
@@ -43,6 +44,12 @@ class Message < ApplicationRecord
         sender.name,
         content
       )
+    end
+  end
+
+  def update_unread_messages
+    conversation.conversations_users.where.not(user_id: sender.id).each do |conv_usr|
+      conv_usr.increment!(:unread_messages)
     end
   end
 end

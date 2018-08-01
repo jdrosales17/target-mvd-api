@@ -45,32 +45,26 @@ RSpec.configure do |config|
       ).to_return(
         status: 200,
         body: {
-          'email': 'test@example.com',
-          'name': 'Test Example',
-          'first_name': 'Test',
-          'id': '1234'
+          email: 'test@example.com',
+          name: 'Test Example',
+          first_name: 'Test',
+          id: '1234'
         }.to_json
       )
 
     stub_request(:post, 'https://onesignal.com/api/v1/notifications' \
       '?app_id=bead734c-25cc-434d-ad23-3372ff762a41')
       .with(
-        body: {
-          'include_player_ids': ['1234'],
-          'headings': { 'en': 'You have a new match!' },
-          'contents': { 'en': 'Another user created a target that matches one of yours'}
-        }.to_json,
+        body: hash_including(
+          include_player_ids: anything,
+          headings: anything,
+          contents: anything
+        ),
         headers: {
           'Authorization' => 'Basic NWRmMzU5ZTMtY2U5YS00ZTkwLWE5MTAtZmFhY2ZlY2E3Nzlk',
           'Content-Type' => 'application/json;charset=utf-8'
         }
-      ).to_return(
-        status: 200,
-        body: {
-          'id': '458dcec4-cf53-11e3-add2-000c2940e62c',
-          'recipients': 1
-        }.to_json
-      )
+      ).to_return(status: 200)
   end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
