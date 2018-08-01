@@ -22,6 +22,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'carrierwave-base64', '~> 2.7'
 # User Auth
 gem 'devise_token_auth', '~> 0.1.43'
+# Geocoding solution
+gem 'geokit-rails', '~> 2.2'
+# Simple HTTP and REST client
+gem 'httparty', '~> 0.13.7'
 # JSON structures
 gem 'jbuilder', '~> 2.7'
 # Ruby SDK for Facebook

@@ -8,14 +8,12 @@ describe 'POST /api/v1/auth/password/edit', type: :request do
     user.confirm
   end
 
-  REDIRECT_URL = 'https://www.targetmvd.com'.freeze
-
   context 'when the request is valid' do
     before do
       get '/api/v1/auth/password/edit',
           params: {
             reset_password_token: user.send_reset_password_instructions,
-            redirect_url: REDIRECT_URL
+            redirect_url: Faker::Internet.url
           }
     end
 

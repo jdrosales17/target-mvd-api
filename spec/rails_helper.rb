@@ -33,6 +33,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     stub_request(:get, 'https://graph.facebook.com/me?access_token=1234' \
+      '&appsecret_proof=6aee5078e77234fbe1b50a136f0fd3896e94709178fede3d9b7f6b954d090aa3' \
       '&fields=email,%20name,%20first_name,%20picture.type(large)')
       .with(
         headers: {
@@ -47,6 +48,26 @@ RSpec.configure do |config|
           'name': 'Test Example',
           'first_name': 'Test',
           'id': '1234'
+        }.to_json
+      )
+
+    stub_request(:post, 'https://onesignal.com/api/v1/notifications' \
+      '?app_id=bead734c-25cc-434d-ad23-3372ff762a41')
+      .with(
+        body: {
+          'include_player_ids': ['1234'],
+          'headings': { 'en': 'You have a new match!' },
+          'contents': { 'en': 'Another user created a target that matches one of yours.'}
+        }.to_json,
+        headers: {
+          'Authorization' => 'Basic NWRmMzU5ZTMtY2U5YS00ZTkwLWE5MTAtZmFhY2ZlY2E3Nzlk',
+          'Content-Type' => 'application/json;charset=utf-8'
+        }
+      ).to_return(
+        status: 200,
+        body: {
+          'id': '458dcec4-cf53-11e3-add2-000c2940e62c',
+          'recipients': 1
         }.to_json
       )
   end
