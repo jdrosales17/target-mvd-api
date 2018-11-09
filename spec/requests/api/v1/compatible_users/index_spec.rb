@@ -15,6 +15,7 @@ describe 'GET /api/v1/compatible_users', type: :request do
       latitude: target.latitude,
       longitude: target.longitude
     )
+    create(:conversation, users: [user, other_user])
   end
 
   context 'when the request is valid' do
@@ -25,9 +26,10 @@ describe 'GET /api/v1/compatible_users', type: :request do
       expect(json['compatible_users'].size).to eq(1)
       expect(json['compatible_users'][0]['id']).to eq(other_user.id)
       expect(json['compatible_users'][0]['name']).to eq(other_user.name)
-      expect(json['compatible_users'][0]['nickname']).to eq(other_user.nickname)
-      expect(json['compatible_users'][0]['image']['url']).to eq(other_user.image.url)
-      expect(json['compatible_users'][0]['email']).to eq(other_user.email)
+      expect(json['compatible_users'][0]['image']['url'])
+        .to eq(other_user.image.url)
+      expect(json['compatible_users'][0]['room_id'])
+        .to eq(user.conversation_with(other_user).id)
     end
 
     it 'returns status code 200' do

@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
 
   has_many :targets, dependent: :destroy
   has_many :devices, dependent: :destroy
+  has_many :conversations_users
+  has_many :conversations, through: :conversations_users
 
   mount_base64_uploader :image, ImageUploader
   validates :nickname, presence: true, uniqueness: true
@@ -54,6 +56,16 @@ class User < ActiveRecord::Base
       user.remote_image_url = user_params.dig(:picture, :data, :url)
       user.confirm
     end
+  end
+
+  def conversation_with(user)
+    Conversation.joins(:conversations_users)
+                .where(
+                  conversations_users: {
+                    user_id: id,
+                    conversation_id: user.conversations.ids
+                  }
+                ).first
   end
 
   private

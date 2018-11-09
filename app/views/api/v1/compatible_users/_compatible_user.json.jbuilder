@@ -1,5 +1,4 @@
 json.id       compatible_user.id
 json.name     compatible_user.name
-json.nickname compatible_user.nickname
 json.image    compatible_user.image
-json.email    compatible_user.email
+json.room_id  compatible_user.conversation_with(current_user).id
