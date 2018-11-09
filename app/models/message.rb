@@ -23,13 +23,26 @@ class Message < ApplicationRecord
 
   validate :sender_from_conversation
 
-  after_create_commit { MessageBroadcastJob.perform_later(self) }
+  after_create_commit do
+    MessageBroadcastJob.perform_later(self)
+    notify_new_message
+  end
 
   private
 
   def sender_from_conversation
     unless conversation.users.include?(sender)
       errors.add(:sender, I18n.t('api.messages.create.invalid_sender'))
+    end
+  end
+
+  def notify_new_message
+    conversation.users.where.not(id: sender.id).each do |target_user|
+      NotifyNewMessageJob.perform_later(
+        target_user.devices.pluck(:device_id),
+        sender.name,
+        content
+      )
     end
   end
 end
