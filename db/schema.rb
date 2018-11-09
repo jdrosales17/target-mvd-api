@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_26_181010) do
+ActiveRecord::Schema.define(version: 2018_07_31_201234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,10 +20,12 @@ ActiveRecord::Schema.define(version: 2018_07_26_181010) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "conversations_users", id: false, force: :cascade do |t|
-    t.bigint "conversation_id", null: false
-    t.bigint "user_id", null: false
-    t.index ["conversation_id", "user_id"], name: "index_conversations_users_on_conversation_id_and_user_id"
+  create_table "conversations_users", force: :cascade do |t|
+    t.integer "unread_messages", default: 0, null: false
+    t.bigint "user_id"
+    t.bigint "conversation_id"
+    t.index ["conversation_id"], name: "index_conversations_users_on_conversation_id"
+    t.index ["user_id"], name: "index_conversations_users_on_user_id"
   end
 
   create_table "devices", force: :cascade do |t|
@@ -99,6 +101,8 @@ ActiveRecord::Schema.define(version: 2018_07_26_181010) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "conversations_users", "conversations"
+  add_foreign_key "conversations_users", "users"
   add_foreign_key "devices", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"

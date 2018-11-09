@@ -68,6 +68,13 @@ class User < ActiveRecord::Base
                 ).first
   end
 
+  def unread_messages_with(user)
+    ConversationsUser.where(
+      user_id: id,
+      conversation_id: user.conversations.ids
+    ).first.unread_messages
+  end
+
   private
 
   def blank_password?
