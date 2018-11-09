@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :targets, only: %i[index create destroy]
       resources :devices, only: %i[create]
       post '/questions', to: 'questions#create'
+      get '/compatible_users', to: 'compatible_users#index'
     end
   end
 end
